@@ -8,5 +8,9 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "sourceMap": true
-  }
+  },
+  "files": [
+    "src/index.ts",
+    "src/stringReader.ts"
+  ]
 }
