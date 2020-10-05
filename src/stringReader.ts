@@ -28,7 +28,6 @@ export default class StringReader {
             x = this.add(i)!;
 
             // Check if x !== i + 1. If so, add the parts.
-            console.log(i, x);
             if (i + 1 !== x) {
                 // Split here.
                 parts.push(this.text.substr(before, i-before+1));
