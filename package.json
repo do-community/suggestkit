@@ -1,6 +1,6 @@
 {
-  "name": "suggestkit",
-  "version": "1.0.0",
+  "name": "@jakemakesstuff/suggestkit",
+  "version": "1.0.1",
   "description": "A kit for implementing suggestions.",
   "main": "dist/index.js",
   "files": [
@@ -8,12 +8,12 @@
   ],
   "scripts": {
     "build": "tsc",
-    "postinstall": "npm run build",
+    "prepublishOnly": "npm run build",
     "bench": "npm run build && node ./bench.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/do-community/suggestkit.git"
+    "url": "git+https://github.com/jakemakesstuff/suggestkit.git"
   },
   "keywords": [
     "suggestion",
@@ -25,10 +25,8 @@
     "url": "https://github.com/do-community/suggestkit/issues"
   },
   "homepage": "https://github.com/do-community/suggestkit#readme",
-  "dependencies": {
-    "typescript": "^4.0.3"
-  },
   "devDependencies": {
+    "typescript": "^4.0.3",
     "benchmark": "2.1.4"
   }
 }
