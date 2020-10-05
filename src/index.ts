@@ -46,14 +46,16 @@ class TreeNode {
 
 class TreeRoot {
     private nodes: TreeNode[];
+    private regexes: {key: RegExp, index: number}[];
 
     constructor() {
         this.nodes = [];
+        this.regexes = [];
     }
 
-    parse(text: string) {
+    parse(text: string, searchInCodeBlocks: boolean) {
         // Create the string reader.
-        const reader = new StringReader(text);
+        const reader = new StringReader(text, searchInCodeBlocks);
 
         // Defines all of the suggestions.
         const suggestions: number[] = [];
@@ -81,13 +83,45 @@ class TreeRoot {
             }
         }
 
+        // If there is regex, handle that.
+        if (this.regexes.length !== 0) {
+            // Check if this is searching in code blocks.
+            if (searchInCodeBlocks) {
+                // Just iterate through each item.
+                for (const regexRes of this.regexes) {
+                    // Check if the regex matched. If it did, add to the array.
+                    if (text.match(regexRes.key)) {
+                        if (!suggestions.includes(regexRes.index)) suggestions.push(regexRes.index);
+                    }
+                }
+            } else {
+                // This is a little more complicated. We need to split the string.
+                const parts = reader.splitIntoParts();
+                for (const regexRes of this.regexes) {
+                    // Check if the regex matched. If it did, add to the array.
+                    for (const part of parts) {
+                        if (part.match(regexRes.key)) {
+                            if (!suggestions.includes(regexRes.index)) suggestions.push(regexRes.index);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         // Return suggestions.
         return suggestions;
     }
 
-    insert(suggestion: {key: string, index: number}) {
+    insert(suggestion: {key: string | RegExp, index: number}) {
+        // Append to regexes if this is one.
+        if (suggestion.key instanceof RegExp) {
+            this.regexes.push({key: suggestion.key, index: suggestion.index});
+            return;
+        }
+
         // Create a reader on the key reader.
-        const keyReader = new StringReader(suggestion.key);
+        const keyReader = new StringReader(suggestion.key, true);
 
         // Read the first char.
         const firstChar = keyReader.readNext();
@@ -110,7 +144,7 @@ class TreeRoot {
 }
 
 // Map all the queries to the binary tree so they can be efficiently searched. Note you should only call this once when you know all suggestions to generate the searcher and not on every search query.
-export default function createSuggestionsSearcher<T>(suggestions: {info: T, key: string}[]): (text: string) => T[] {
+export default function createSuggestionsSearcher<T>(suggestions: {info: T, key: string | RegExp}[]): (text: string, searchInCodeBlocks: boolean) => T[] {
     // Create a root.
     const root = new TreeRoot();
 
@@ -120,5 +154,5 @@ export default function createSuggestionsSearcher<T>(suggestions: {info: T, key:
     })) root.insert(suggestion);
 
     // Return a function to get the suggestion.
-    return (text: string) => root.parse(text).sort().map(x => suggestions[x].info);
+    return (text: string, searchInCodeBlocks: boolean) => root.parse(text, searchInCodeBlocks).sort().map(x => suggestions[x].info);
 }
