@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A kit for implementing suggestions.",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "postinstall": "npm run build",
