@@ -1,0 +1,31 @@
+{
+  "name": "suggestkit",
+  "version": "1.0.0",
+  "description": "A kit for implementing suggestions.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "postinstall": "npm run build",
+    "bench": "npm run build && node ./bench.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-community/suggestkit.git"
+  },
+  "keywords": [
+    "suggestion",
+    "community"
+  ],
+  "author": "DigitalOcean",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/do-community/suggestkit/issues"
+  },
+  "homepage": "https://github.com/do-community/suggestkit#readme",
+  "dependencies": {
+    "typescript": "^4.0.3"
+  },
+  "devDependencies": {
+    "benchmark": "2.1.4"
+  }
+}
