@@ -4,17 +4,9 @@ const suggestKit = require("./dist").default;
 const suite = new Benchmark.Suite();
 
 const a = [];
-for (let index = 0; index < 10000; index++) {
+for (let index = 0; index < 300; index++) {
     a.push({
         key: "abc".repeat(index + 1),
-        info: null,
-    });
-    a.push({
-        key: "b".repeat(index + 1),
-        info: null,
-    });
-    a.push({
-        key: "c".repeat(index + 1),
         info: null,
     });
 }

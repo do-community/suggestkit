@@ -1,10 +1,10 @@
 # SuggestKit
 
-SuggestKit is a high performance suggestion engine which can scale without losing too much performance. It works by using an internal binary tree to look up each character in a string. From here, we can go through the child of each node. This compares to using the `includes` function which is significantly slower (this is benchmarked on a Ryzen 9 3900x running Ubuntu 20.04.1 LTS with the Linux 5.8 kernel using 20k characters and 30k possibilities, this is certainly a worst case scenario, but not an impossible case over time):
+SuggestKit is a high performance suggestion engine which can scale without losing too much performance. It works by using an internal binary tree to look up each character in a string. From here, we can go through the child of each node. This compares to using the `includes` function which is significantly slower (this is benchmarked on a Ryzen 9 3900x running Ubuntu 20.04.1 LTS with the Linux 5.8 kernel using 20k characters and 300 possibilities):
 
 ```
-stringIncludes x 3.59 ops/sec ±0.23% (13 runs sampled)
-tree x 1,135 ops/sec ±1.15% (86 runs sampled)
+stringIncludes x 100 ops/sec ±0.12% (71 runs sampled)
+tree x 1,133 ops/sec ±1.24% (89 runs sampled)
 ```
 
 SuggestKit also accounts for ignoring markdown. This is important since you might have code/logs in markdown that generate a lot of false negatives.
