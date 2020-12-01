@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jakemakesstuff/suggestkit.git"
+    "url": "git+https://github.com/do-community/suggestkit.git"
   },
   "keywords": [
     "suggestion",
